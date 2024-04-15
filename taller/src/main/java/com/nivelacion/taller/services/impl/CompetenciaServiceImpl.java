@@ -82,20 +82,19 @@ public class CompetenciaServiceImpl implements CompetenciaService {
         return result;
     }
 
-    public void generarFixture() {
-        try {
-            List<List<ParticipanteDTO>> enfrentamientos = generarEnfrentamientos(
-                    participanteServiceImpl.getParticipantes());
-
-            // Imprimir el fixture si es necesario
-            for (int i = 0; i < enfrentamientos.size(); i++) {
-                List<ParticipanteDTO> enfrentamiento = enfrentamientos.get(i);
-                System.out.println("Partido " + (i + 1) + ": " + enfrentamiento.get(0).getNombre() + " vs "
-                        + enfrentamiento.get(1).getNombre());
-            }
-        } catch (EmptyListException e) {
-            System.out.println("Error al obtener la lista de participantes: " + e.getMessage());
+    public List<List<String>> generarFixture() throws EmptyListException {
+        List<List<ParticipanteDTO>> enfrentamientos = generarEnfrentamientos(participanteServiceImpl.getParticipantes());
+        List<List<String>> fixture = new ArrayList<>();
+    
+        for (int i = 0; i < enfrentamientos.size(); i++) {
+            List<ParticipanteDTO> enfrentamiento = enfrentamientos.get(i);
+            List<String> partido = new ArrayList<>();
+            partido.add(enfrentamiento.get(0).getNombre());
+            partido.add(enfrentamiento.get(1).getNombre());
+            fixture.add(partido);
         }
+    
+        return fixture;
     }
 
     private List<List<ParticipanteDTO>> generarEnfrentamientos(List<ParticipanteDTO> participantes) {

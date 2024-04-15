@@ -52,4 +52,14 @@ public class CompetenciaController {
         return ResponseEntity.status(HttpStatus.CREATED).body(dtoReturned);
     }
 
+    @GetMapping("/fixture")
+public ResponseEntity<List<List<String>>> getFixture() {
+    try {
+        List<List<String>> fixture = competenciaServiceImpl.generarFixture();
+        return ResponseEntity.ok().body(fixture);
+    } catch (EmptyListException e) {
+        return ResponseEntity.notFound().build();
+    }
+}
+
 }
