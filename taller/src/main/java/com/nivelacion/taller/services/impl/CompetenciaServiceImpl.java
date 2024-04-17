@@ -114,4 +114,10 @@ public class CompetenciaServiceImpl implements CompetenciaService {
         return enfrentamientos;
     }
 
+    public void deletecomp(Long id) throws ModelNotFoundException {
+        Competencia competencia = competenciaRepository.findById(id)
+                .orElseThrow(() -> new ModelNotFoundException(id, "Competencia"));
+        competenciaRepository.delete(competencia);
+    }
+
 }
